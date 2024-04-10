@@ -1,0 +1,4 @@
+﻿l_english:
+  create_cadet_branch_v2_legitimacy_level_equal:1 "Your [legitimacy_level|E]([Character.GetLegitimacyLevel.GetIndex|V]) is equal to that of [Character.GetHouse.GetHeadOfHouse.GetTitledFirstName|U]([Character.GetHouse.GetHeadOfHouse.GetLegitimacyLevel.GetIndex|V])"
+
+  create_cadet_branch_v2_legitimacy_level_greater_than:1 "Your [legitimacy_level|E]([Character.GetLegitimacyLevel.GetIndex|V]) is greater than that of [Character.GetHouse.GetHeadOfHouse.GetTitledFirstName|U]([Character.GetHouse.GetHeadOfHouse.GetLegitimacyLevel.GetIndex|V])"

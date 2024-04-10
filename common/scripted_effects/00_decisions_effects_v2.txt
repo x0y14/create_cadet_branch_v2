@@ -1,0 +1,137 @@
+﻿##################################################
+# Found Cadet House Effects
+found_cadet_house_decision_effect = {
+	hidden_effect = {
+		house.house_head = {
+			save_scope_as = former_house_head
+		}
+		house = {
+			save_scope_as = former_house
+		}
+		add_achievement_flag_effect = { FLAG = achievement_a_house_of_my_own_flag }
+	}
+
+	create_cadet_branch = yes
+	add_prestige = $PRESTIGE$
+	hidden_effect = {
+		save_scope_as = new_head
+		house = {
+			save_scope_as = new_house
+		}
+
+		# V2
+		# もし前の家長が敵対的な宗教だったら、完全に新しいCOAを作る
+		if = {
+			limit = {
+				scope:former_house_head.faith = {
+					faith_hostility_level = {
+						target = old_house_head_v2.faith
+						value >= faith_hostile_level
+					}
+				}
+			}
+			scope:new_house = {
+				generate_coa = yes
+			}
+		}
+
+
+		every_player = {
+			limit = {
+				exists = house
+				house = scope:new_house
+				NOT = { this = $CHARACTER$ }
+			}
+			send_interface_toast = {
+				type = msg_created_new_house
+				title = created_cadet_branch_toast_new_house_desc
+				left_icon = scope:new_head
+				desc = created_cadet_branch_toast_new_house_other_tt
+			}
+		}
+		send_interface_toast = {
+			type = msg_created_new_house
+			title = created_cadet_branch_toast_new_house_desc
+			left_icon = scope:new_head
+			right_icon = scope:former_house_head
+			desc = created_cadet_branch_toast_new_house_other_tt
+		}
+		if = {
+			limit = {
+				any_child = {
+					has_trait = bastard
+					is_lowborn = no
+					dynasty = scope:new_head.dynasty
+					NOT =  { house = scope:new_house }
+				}
+			}
+			every_child = {
+				limit = {
+					has_trait = bastard
+					is_lowborn = no
+					dynasty = scope:new_head.dynasty
+					NOT =  { house = scope:new_house }
+				}
+				set_house = scope:new_house
+			}
+		}
+		if = {
+			limit = {
+				any_artifact = {
+					trigger_if = {
+						limit = { exists = var:banner_dynasty }
+						var:banner_dynasty = root.dynasty
+					}
+					trigger_else = { always = no }
+                    artifact_owner = {
+						NOT = { this = root }
+						in_diplomatic_range = root
+					}
+					NOT = {
+						any_artifact_house_claimant = {
+							this = scope:new_house
+						}
+					}
+				}
+			}
+			random_artifact = {
+				limit = {
+					exists = var:banner_dynasty
+					var:banner_dynasty = root.dynasty
+					artifact_owner = { in_diplomatic_range = root }
+					NOT = {
+						any_artifact_house_claimant = {
+							this = scope:new_house
+						}
+					}
+				}
+				save_scope_as = new_branch_dynasty_banner
+			}
+			scope:new_house = {
+				add_house_artifact_claim = scope:new_branch_dynasty_banner
+			}
+		}
+
+		# Struggle Catalysts
+		if = {
+			limit = {
+				root =  {
+					exists = house
+					exists = house.house_head
+					any_character_struggle	 = {
+						involvement = involved
+						phase_has_catalyst = catalyst_cadet_branch_created
+					}
+				}
+			}
+			every_character_struggle = {
+				involvement = involved
+				activate_struggle_catalyst = {
+					catalyst = catalyst_cadet_branch_created
+					character = root
+				}
+				log_debug_variable_for_persian_struggle_effect = { VAR = unrest_catalyst_cadet_branch_created }
+			}
+		}
+	}
+}
