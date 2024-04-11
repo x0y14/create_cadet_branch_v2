@@ -1,4 +1,4 @@
-create_cadet_branch_decision = {
+﻿create_cadet_branch_decision = {
 	picture = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
 
 	major = yes
@@ -278,6 +278,17 @@ create_cadet_branch_decision = {
 			opinion = {
 				target = house.house_head
 				value >= -50
+			}
+		}
+
+		# V2
+		# 家のメンバー多すぎるとやる
+		modifier = {
+			add = 1000
+			house ?= {
+				any_house_member = {
+					count >= 50
+				}
 			}
 		}
 	}
