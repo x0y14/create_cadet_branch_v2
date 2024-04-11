@@ -1,4 +1,4 @@
-﻿create_cadet_branch_decision = {
+create_cadet_branch_decision = {
 	picture = "gfx/interface/illustrations/decisions/decision_dynasty_house.dds"
 
 	major = yes
@@ -36,6 +36,19 @@
 							}
 						}
 					}
+				}
+
+				# V2
+				OR = {
+					root.culture = {
+						OR = {
+							# 同じ系統の文化でない
+							NOT = { has_same_culture_heritage = root.house.house_head.culture }
+							# 受容値30未満
+							cultural_acceptance = { target = root.house.house_head.culture value < 30 }
+						}
+					}
+					root = { is_independent_ruler = yes }
 				}
 			}
 			trigger_else = {

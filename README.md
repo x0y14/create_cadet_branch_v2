@@ -9,6 +9,12 @@ if clan:
         has_house_unity_stage = competitive
         is_independent_ruler = yes
     }
+if not(clan):
+    OR = {
+        NOT = { culture = { has_same_culture_heritage = { house_head.culture } } }
+        culture = { cultural_acceptance = { target = house_head.culture value < 30 } }
+        is_independent_ruler = yes
+    }
 
 highest_held_title_tier >= tier_duchy
 prestige_level >= 3
