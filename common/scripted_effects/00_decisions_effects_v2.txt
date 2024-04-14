@@ -21,20 +21,22 @@ found_cadet_house_decision_effect = {
 
 		# V2
 		# もし前の家長が敵対的な宗教だったら、完全に新しいCOAを作る
-		if = {
-			limit = {
-				scope:former_house_head.faith = {
-					faith_hostility_level = {
-						target = old_house_head_v2.faith
-						value >= faith_hostile_level
-					}
-				}
-			}
-			scope:new_house = {
-				generate_coa = yes
-			}
+		# if = {
+		# 	limit = {
+		# 		scope:former_house_head.faith = {
+		# 			faith_hostility_level = {
+		# 				target = scope:old_house_head_v2.faith
+		# 				value >= faith_hostile_level
+		# 			}
+		# 		}
+		# 	}
+		# 	scope:new_house = {
+		# 		generate_coa = yes
+		# 	}
+		# }
+		scope:new_house = {
+			generate_coa = yes
 		}
-
 
 		every_player = {
 			limit = {
